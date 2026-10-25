@@ -6,7 +6,7 @@
   <meta name="description" content="SG2SP: From Demonstrations to Symbolic Planning — Robotic Scene Graph Generation via Symbolic-Consistent Temporal Abstraction.">
   <meta property="og:title" content="From Demonstrations to Symbolic Planning | SG2SP">
   <meta property="og:description" content="Robotic Scene Graph Generation via Symbolic-Consistent Temporal Abstraction.">
-  <title>SG2SP: From Demonstrations to Symbolic Planning</title>
+  <title>From Demonstrations to Symbolic Planning (Humanoids 2026)</title>
 
   <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
@@ -47,13 +47,580 @@
     pre { overflow-x: auto; padding: 1.2rem; background: #f4f6f8; border-radius: 8px; font-size: .9rem; }
     .footer { border-top: 1px solid #eee; padding: 2rem 1.5rem; }
     .small-note { color: #707780; font-size: .92rem; }
+    .framework-image-container {
+      max-width: 1000px;
+      margin: 0 auto 2.5rem;
+      text-align: center;
+    }
+
+    .framework-image {
+      display: block;
+      width: 100%;
+      height: auto;
+      object-fit: contain;
+    }
     @media (max-width: 768px) {
       .publication-header .hero-body { padding-top: 2rem; }
       .publication-title { font-size: 2rem !important; }
       .pipeline-arrow { transform: rotate(90deg); min-height: 2rem; }
     }
+    /* Prompts section */
+    .prompt-list {
+      max-width: 850px;
+      margin: 0 auto;
+    }
+
+    .prompt-item {
+      margin-bottom: 0.65rem;
+      border: 1px solid #e5e7eb;
+      border-radius: 8px;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .prompt-item summary {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 1rem 1.2rem;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 0.95rem;
+      list-style: none;
+    }
+
+    .prompt-item summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .prompt-item summary::after {
+      content: "+";
+      font-size: 1.2rem;
+      color: #3273dc;
+      flex-shrink: 0;
+    }
+
+    .prompt-item[open] summary::after {
+      content: "−";
+    }
+
+    .prompt-item summary:hover {
+      background: #f8faff;
+    }
+
+    .prompt-tag {
+      margin-left: auto;
+      padding: 0.2rem 0.55rem;
+      border-radius: 4px;
+      background: #eff4ff;
+      color: #3273dc;
+      font-size: 0.72rem;
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .prompt-content {
+      padding: 0 1.2rem 1.2rem;
+    }
+
+    .prompt-content pre {
+      margin: 0;
+      padding: 1rem;
+      background: #f6f8fa;
+      border-radius: 6px;
+      white-space: pre-wrap;
+      overflow-wrap: anywhere;
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+
+    .prompt-content code {
+      color: #24292f;
+      font-family: "SFMono-Regular", Consolas, monospace;
+    }
+
+    @media (max-width: 600px) {
+      .prompt-item summary {
+        padding: 0.85rem;
+        font-size: 0.88rem;
+      }
+
+      .prompt-content {
+        padding: 0 0.85rem 0.85rem;
+      }
+    }
+
+    /* Scene Graph Carousel */
+/* Scene Graph Visualization Layout */
+
+.sg-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 520px;
+  gap: 1.25rem;
+  align-items: start;
+  max-width: 1100px;
+  margin: 2rem auto 0;
+}
+
+/* Left: Video */
+
+.sg-main {
+  min-width: 0;
+  padding: 1rem;
+  background: #fff;
+  border: 1px solid #e2e7ef;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+}
+
+.sg-video-wrapper {
+  width: 100%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border-radius: 9px;
+  background: #111;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sg-video-wrapper video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.sg-caption {
+  padding: 1rem 0 0.25rem;
+  text-align: center;
+}
+
+.sg-caption h3 {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #303846;
+  margin-bottom: 0.3rem;
+}
+
+.sg-caption p {
+  font-size: 0.8rem;
+  color: #8a94a3;
+  margin: 0;
+}
+
+/* Right: Task menu */
+
+.sg-sidebar {
+  background: #fff;
+  border: 1px solid #e2e7ef;
+  border-radius: 14px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+}
+
+.sg-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.sg-sidebar-header h3 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #263449;
+  margin: 0;
+}
+
+.sg-sidebar-header > span {
+  font-size: 0.72rem;
+  color: #7b8492;
+  background: #f1f4f9;
+  padding: 0.25rem 0.5rem;
+  border-radius: 5px;
+}
+
+.sg-group {
+  border-bottom: 1px solid #edf0f5;
+}
+
+.sg-group:last-child {
+  border-bottom: none;
+}
+
+.sg-group-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: none;
+  background: #fafbfc;
+  color: #38465a;
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-align: left;
+  cursor: pointer;
+}
+
+.sg-group-header > span {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+}
+
+.sg-group-header .fa-robot {
+  color: #6482b8;
+  font-size: 0.85rem;
+}
+
+.sg-chevron {
+  font-size: 0.7rem;
+  color: #9aa3b1;
+  transition: transform 0.2s;
+}
+
+.sg-group-header[aria-expanded="false"] .sg-chevron {
+  transform: rotate(-90deg);
+}
+
+.sg-group-items {
+  padding: 0.3rem 0.45rem;
+}
+
+.sg-group.collapsed .sg-group-items {
+  display: none;
+}
+
+/* Individual task */
+
+.sg-task {
+  display: block;
+  width: 100%;
+  padding: 0.65rem 0.75rem;
+  margin: 0.15rem 0;
+  border: none;
+  border-radius: 7px;
+  background: transparent;
+  color: #596579;
+  font-size: 0.8rem;
+  text-align: left;
+  line-height: 1.45;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.sg-task:hover {
+  background: #f3f6fc;
+  color: #2456c5;
+}
+
+.sg-task.active {
+  background: #edf3ff;
+  color: #2456c5;
+  font-weight: 600;
+  box-shadow: inset 3px 0 #3273dc;
+}
+
+.sg-task-name {
+  display: block;
+}
+
+/* Responsive layout */
+
+@media (max-width: 768px) {
+  .sg-layout {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1rem;
+  }
+
+  .sg-sidebar {
+    max-height: 450px;
+    overflow-y: auto;
+  }
+
+  .sg-video-wrapper {
+    aspect-ratio: 4 / 3;
+  }
+}
+
+
+/* PDDL Operator Explorer */
+
+.op-layout {
+  display: grid;
+  grid-template-columns: 250px minmax(0, 1fr);
+  gap: 1.25rem;
+  max-width: 1100px;
+  margin: 2rem auto 0;
+  align-items: start;
+}
+
+.op-sidebar,
+.op-details {
+  background: #fff;
+  border: 1px solid #e2e7ef;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.op-sidebar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.op-count {
+  padding: 0.2rem 0.5rem;
+  background: #f0f3f8;
+  color: #64748b;
+  border-radius: 5px;
+  font-size: 0.75rem;
+}
+
+.op-list-item {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border: none;
+  border-bottom: 1px solid #f0f2f6;
+  background: white;
+  text-align: left;
+  cursor: pointer;
+  color: #526075;
+  font-size: 0.82rem;
+  transition: background 0.15s;
+}
+
+.op-list-item:hover {
+  background: #f7f9fc;
+}
+
+.op-list-item.active {
+  background: #edf3ff;
+  color: #2456c5;
+  font-weight: 600;
+  box-shadow: inset 3px 0 #3273dc;
+}
+
+.op-list-number {
+  color: #9aa4b2;
+  font-size: 0.72rem;
+  font-variant-numeric: tabular-nums;
+}
+
+.op-list-name {
+  overflow-wrap: anywhere;
+}
+
+/* Details header */
+
+.op-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1.4rem 1.5rem;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.op-overline {
+  color: #8190a5;
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  font-weight: 700;
+}
+
+.op-detail-header h3 {
+  margin: 0.4rem 0 0;
+  font-family: monospace;
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: #263449;
+  overflow-wrap: anywhere;
+}
+
+.op-index {
+  flex-shrink: 0;
+  font-size: 0.75rem;
+  color: #8793a5;
+}
+
+/* Parameters */
+
+.op-parameters {
+  padding: 1.2rem 1.5rem;
+  border-bottom: 1px solid #edf0f5;
+}
+
+.op-parameters h4,
+.op-logic-heading h4 {
+  margin: 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #374151;
+}
+
+.op-param-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-top: 0.8rem;
+}
+
+.op-param {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.35rem 0.55rem;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
+  background: #f8fafc;
+  font-size: 0.75rem;
+  max-width: 100%;
+  overflow-wrap: anywhere;
+}
+
+.op-param code {
+  color: #2456c5;
+  font-weight: 600;
+}
+
+.op-param small {
+  color: #778397;
+}
+
+/* Preconditions and effects */
+
+.op-logic-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  padding: 1.25rem 1.5rem;
+}
+
+.op-logic-card {
+  min-width: 0;
+  padding: 1rem;
+  border: 1px solid #edf0f5;
+  border-radius: 9px;
+  background: #fff;
+}
+
+.op-logic-card:first-child {
+  grid-column: 1 / -1;
+}
+
+.op-logic-heading {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 0.85rem;
+}
+
+.op-dot {
+  width: 8px;
+  height: 8px;
+  flex-shrink: 0;
+  border-radius: 50%;
+}
+
+.pre-dot {
+  background: #6482b8;
+}
+
+.add-dot {
+  background: #23966a;
+}
+
+.del-dot {
+  background: #d45d63;
+}
+
+.op-predicate-list {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.45rem;
+}
+
+.op-predicate {
+  display: inline-block;
+  max-width: 100%;
+  padding: 0.4rem 0.55rem;
+  border-radius: 5px;
+  font-family: monospace;
+  font-size: 0.75rem;
+  line-height: 1.55;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+
+.op-predicate.pre {
+  background: #f0f4fa;
+  color: #435d83;
+}
+
+.op-predicate.add {
+  background: #eaf7f0;
+  color: #19734f;
+}
+
+.op-predicate.del {
+  background: #fff0f0;
+  color: #b34249;
+}
+
+.op-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  padding: 0.85rem 1.5rem;
+  border-top: 1px solid #edf0f5;
+  color: #929cad;
+  font-size: 0.72rem;
+}
+
+/* Mobile */
+
+@media (max-width: 768px) {
+  .op-layout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .op-sidebar {
+    max-height: 280px;
+    overflow-y: auto;
+  }
+
+  .op-logic-grid {
+    grid-template-columns: minmax(0, 1fr);
+    padding: 1rem;
+  }
+
+  .op-logic-card:first-child {
+    grid-column: auto;
+  }
+
+  .op-detail-header,
+  .op-parameters {
+    padding: 1rem;
+  }
+}
+
+
   </style>
 </head>
+
 <body>
   <nav class="navbar" role="navigation" aria-label="main navigation">
     <div class="container is-max-widescreen">
@@ -67,6 +634,7 @@
           <a class="navbar-item" href="#abstract">Abstract</a>
           <a class="navbar-item" href="#video">Video</a>
           <a class="navbar-item" href="#method">Method</a>
+          <a class="navbar-item" href="#visualizations">Visualization</a>
           <a class="navbar-item" href="#citation">Citation</a>
         </div>
       </div>
@@ -93,7 +661,7 @@
           <span class="author-block">Dongheui Lee<sup>1,2</sup></span>
         </div>
         <div class="publication-authors mt-2">
-          <div><sup>1</sup> Autonomous Systems Lab, Technische Universität Wien (TU Wien)</div>
+          <div><sup>1</sup> Autonomous Systems Lab, Vienna University of Technology (TU Wien)</div>
           <div><sup>2</sup> Institute of Robotics and Mechatronics, German Aerospace Center (DLR)</div>
         </div>
         <div class="publication-links">
@@ -104,7 +672,7 @@
           </span>
           <span class="link-block">
             <a href="#abstract" class="button is-normal is-rounded is-link is-light">
-              <span class="icon"><i class="fas fa-file-lines"></i></span><span>Abstract</span>
+              <span class="icon"><i class="fas fa-file-lines"></i></span><span>Paper (Coming Soon)</span>
             </a>
           </span>
         </div>
@@ -156,22 +724,22 @@
         <div class="column">
           <div class="contribution-card">
             <!-- <div class="icon is-large"><i class="fas fa-film fa-2x"></i></div> -->
-            <h3>Symbolically Consistent Temporal Abstraction</h3>
-            <p>Segment robotic demonstrations into temporally consistent intervals to support the construction of planning-ready symbolic states.</p>
+            <h3>A symbolic boundary detection method</h3>
+            <p>Segments robotic demonstrations into symbolically consistent segments accurately in a zero-shot manner.</p>
           </div>
         </div>
         <div class="column">
           <div class="contribution-card">
             <!-- <div class="icon is-large"><i class="fas fa-diagram-project fa-2x"></i></div> -->
-            <h3>Robot-Prior-Informed Scene Graph Generation</h3>
-            <p>Generate a symbolic scene graph for each segment using reasoning informed by robot priors, with the goal of producing accurately grounded symbolic states.</p>
+            <h3>A scene graph generation framework</h3>
+            <p>Leverages manipulation object typing, robot observations, and physical support reasoning to generate planning-ready symbolic scene graphs.</p>
           </div>
         </div>
         <div class="column">
           <div class="contribution-card">
             <!-- <div class="icon is-large"><i class="fas fa-sitemap fa-2x"></i></div> -->
-            <h3>Reusable Symbolic Operators</h3>
-            <p>Lift the resulting scene graphs into PDDL operators for downstream planning and demonstrate reuse on previously unseen real-world tasks.</p>
+            <h3>A symbolic lifting pipeline</h3>
+            <p>Induces reusable PDDL operators from grounded scene graphs, bridging foundation-model perception and symbolic task planning.</p>
           </div>
         </div>
       </div>
@@ -179,42 +747,438 @@
   </section>
 
   <section id="method" class="section hero is-light">
-    <div class="container is-max-desktop">
-      <div class="has-text-centered">
-        <h2 class="title is-2 section-title">Method Overview</h2>
-        <p class="subtitle is-6 small-note">From continuous demonstrations to reusable symbolic planning knowledge.</p>
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+
+        <div class="has-text-centered mb-6">
+          <h2 class="title is-2 section-title">Framework Overview</h2>
+          <p class="subtitle is-6">
+            From robot demonstrations to symbolic task planning and online generalization.
+          </p>
+        </div>
+
+        <div class="framework-image-container">
+          <img
+            src="Images/Overview_framework.png"
+            alt="Overview of the proposed SG2SP framework"
+            class="framework-image"
+          >
+        </div>
+
+        <div class="columns is-multiline is-variable is-4">
+
+          <!-- Step 1 -->
+          <div class="column is-half">
+            <div class="box framework-card">
+              <div class="framework-step">01</div>
+              <h3 class="title is-5">Symbolic Boundary Detection</h3>
+              <p>
+                Segment demonstrations into <strong>symbolic-consistent phases</strong>
+                by detecting symbolic boundaries.
+              </p>
+              <span class="framework-reference">Section IV-A</span>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div class="column is-half">
+            <div class="box framework-card">
+              <div class="framework-step">02</div>
+              <h3 class="title is-5">Scene Graph Generation</h3>
+              <p>
+                Generate scene graphs through three stages:
+                <strong>symbolic query generation</strong>,
+                <strong>scene graph completion</strong>, and
+                <strong>support relation completion</strong>.
+              </p>
+              <span class="framework-reference">Section IV-B</span>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div class="column is-half">
+            <div class="box framework-card">
+              <div class="framework-step">03</div>
+              <h3 class="title is-5">PDDL Domain Induction</h3>
+              <p>
+                Convert the generated scene graphs into
+                <strong>PDDL planning files</strong> for downstream symbolic task planning.
+              </p>
+              <span class="framework-reference">Section IV-C</span>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div class="column is-half">
+            <div class="box framework-card">
+              <div class="framework-step">04</div>
+              <h3 class="title is-5">Online Task Planning</h3>
+              <p>
+                Reuse the induced planning domain and scene graph generation framework
+                to plan <strong>unseen tasks online</strong>.
+              </p>
+              <span class="framework-reference">Section IV-D</span>
+            </div>
+          </div>
+
+        </div>
       </div>
     </div>
   </section>
-  <section class="section pt-5">
-    <div class="container is-max-widescreen">
-      <div class="columns is-variable is-3 is-vcentered">
-        <div class="column">
-          <div class="stage-card">
-            <span class="stage-badge">STEP I</span>
-            <h3>Temporal Abstraction</h3>
-            <p>Segment the demonstration into intervals that support temporally consistent symbolic abstraction.</p>
-          </div>
+
+
+<section id="visualizations" class="section">
+  <div class="container is-max-widescreen">
+
+    <div class="has-text-centered mb-5">
+      <h2 class="title is-2 section-title">Scene Graph Visualizations</h2>
+      <p class="subtitle is-6">
+        Explore scene graph visualization videos across different robots and manipulation tasks.
+      </p>
+    </div>
+
+    <div class="sg-layout">
+
+      <!-- Left: Video player -->
+      <div class="sg-main">
+        <div class="sg-video-wrapper">
+          <video id="sg-video"
+                 controls
+                 muted
+                 playsinline
+                 preload="metadata">
+            Your browser does not support HTML5 video.
+          </video>
         </div>
-        <div class="column is-narrow pipeline-arrow"><i class="fas fa-arrow-right"></i></div>
-        <div class="column">
-          <div class="stage-card">
-            <span class="stage-badge">STEP II</span>
-            <h3>Symbolic Scene Graphs</h3>
-            <p>Generate grounded symbolic scene graphs for the resulting segments through robot-prior-informed reasoning.</p>
-          </div>
-        </div>
-        <div class="column is-narrow pipeline-arrow"><i class="fas fa-arrow-right"></i></div>
-        <div class="column">
-          <div class="stage-card">
-            <span class="stage-badge">STEP III</span>
-            <h3>PDDL Operator Lifting</h3>
-            <p>Convert the symbolic representations into reusable operators for symbolic task planning.</p>
-          </div>
+
+        <div class="sg-caption">
+          <h3 id="sg-title"></h3>
+          <p id="sg-counter"></p>
         </div>
       </div>
+
+      <!-- Right: Task selection menu -->
+      <aside class="sg-sidebar">
+
+        <div class="sg-sidebar-header">
+          <h3>Tasks</h3>
+          <span id="sg-total">12 tasks</span>
+        </div>
+
+        <!-- AgileX -->
+        <div class="sg-group">
+          <button class="sg-group-header" type="button" aria-expanded="true">
+            <span>
+              <i class="fas fa-robot"></i>
+              AgileX Cobot Magic
+            </span>
+            <i class="fas fa-chevron-down sg-chevron"></i>
+          </button>
+
+          <div class="sg-group-items">
+            <button class="sg-task active" data-index="0" type="button">
+              <span class="sg-task-name">Pour water into pink cup</span>
+            </button>
+            <button class="sg-task" data-index="1" type="button">
+              <span class="sg-task-name">Store fruit in basket</span>
+            </button>
+            <button class="sg-task" data-index="2" type="button">
+              <span class="sg-task-name">Store fruit in bowl</span>
+            </button>
+            <button class="sg-task" data-index="3" type="button">
+              <span class="sg-task-name">Wipe the table</span>
+            </button>
+            <button class="sg-task" data-index="4" type="button">
+              <span class="sg-task-name">Make fruit salad</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Galaxea -->
+        <div class="sg-group">
+          <button class="sg-group-header" type="button" aria-expanded="true">
+            <span>
+              <i class="fas fa-robot"></i>
+              Galaxea R1 Lite
+            </span>
+            <i class="fas fa-chevron-down sg-chevron"></i>
+          </button>
+
+          <div class="sg-group-items">
+            <button class="sg-task" data-index="5" type="button">
+              <span class="sg-task-name">Pour liquid</span>
+            </button>
+            <button class="sg-task" data-index="6" type="button">
+              <span class="sg-task-name">Pour solid</span>
+            </button>
+            <button class="sg-task" data-index="7" type="button">
+              <span class="sg-task-name">Toggle red drawer</span>
+            </button>
+            <button class="sg-task" data-index="8" type="button">
+              <span class="sg-task-name">Toggle yellow drawer</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Realman -->
+        <div class="sg-group">
+          <button class="sg-group-header" type="button" aria-expanded="true">
+            <span>
+              <i class="fas fa-robot"></i>
+              Realman RMC AIDA L
+            </span>
+            <i class="fas fa-chevron-down sg-chevron"></i>
+          </button>
+
+          <div class="sg-group-items">
+            <button class="sg-task" data-index="9" type="button">
+              <span class="sg-task-name">Pass bowl</span>
+            </button>
+            <button class="sg-task" data-index="10" type="button">
+              <span class="sg-task-name">Store banana in basket</span>
+            </button>
+            <button class="sg-task" data-index="11" type="button">
+              <span class="sg-task-name">Fruit storage</span>
+            </button>
+          </div>
+        </div>
+
+      </aside>
     </div>
-  </section>
+  </div>
+</section>
+
+<section id="operators" class="section is-light">
+  <div class="container is-max-widescreen">
+
+    <div class="has-text-centered mb-5">
+      <h2 class="title is-2 section-title">Induced PDDL Operators</h2>
+      <p class="subtitle is-6">
+        Explore the induced symbolic operators, their preconditions, and their effects from the 12 tasks above.
+      </p>
+    </div>
+
+    <div class="op-layout">
+
+      <!-- Left: Operator list -->
+      <aside class="op-sidebar">
+        <div class="op-sidebar-header">
+          <span>Action Schemas</span>
+          <span id="op-count" class="op-count">12</span>
+        </div>
+
+        <div id="op-list"></div>
+      </aside>
+
+      <!-- Right: Selected operator -->
+      <div class="op-details">
+
+        <div class="op-detail-header">
+          <div>
+            <span class="op-overline">PDDL ACTION SCHEMA</span>
+            <h3 id="op-title">grasp_container</h3>
+          </div>
+          <span id="op-index" class="op-index">01 / 12</span>
+        </div>
+
+        <div class="op-parameters">
+          <h4>Parameters</h4>
+          <div id="op-params" class="op-param-list"></div>
+        </div>
+
+        <div class="op-logic-grid">
+
+          <div class="op-logic-card">
+            <div class="op-logic-heading">
+              <span class="op-dot pre-dot"></span>
+              <h4>Preconditions</h4>
+            </div>
+            <div id="op-preconditions" class="op-predicate-list"></div>
+          </div>
+
+          <div class="op-logic-card">
+            <div class="op-logic-heading">
+              <span class="op-dot add-dot"></span>
+              <h4>Add Effects</h4>
+            </div>
+            <div id="op-add-effects" class="op-predicate-list"></div>
+          </div>
+
+          <div class="op-logic-card">
+            <div class="op-logic-heading">
+              <span class="op-dot del-dot"></span>
+              <h4>Delete Effects</h4>
+            </div>
+            <div id="op-del-effects" class="op-predicate-list"></div>
+          </div>
+
+        </div>
+
+        <div class="op-footer">
+          <span>STRIPS</span>
+          <span>•</span>
+          <span>Typed predicates</span>
+          <span>•</span>
+          <span>Action schemas</span>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section id="prompts" class="section">
+  <div class="container is-max-desktop">
+
+    <div class="has-text-centered mb-5">
+      <h2 class="title is-3">Prompts</h2>
+      <p class="subtitle is-6">
+        Explore the prompts used in our framework.
+      </p>
+    </div>
+
+    <div class="prompt-list">
+
+      <details class="prompt-item">
+        <summary>
+          <span>01. Stage I: Prompt for Object Types Classification</span>
+          <span class="prompt-tag">Scene Graph Generation</span>
+        </summary>
+        <div class="prompt-content">
+          <pre><code>You are a robotics ontology assistant.
+For each object, classify its manipulation properties.
+Definitions:
+- rigid:
+	The object maintains its shape during normal 	manipulation, and does not have hinges or joints (e.g., 	cup, bottle, bowl, fruit, vegetable).
+- articulated:
+	The object contains movable joints or hinges (e.g., 	drawer, cabinet, door).
+- fabric:
+	The object is made of fabric and can be manipulated as 	such (e.g., cloth, towel, blanket).
+- container:
+	The object can contain another object (e.g., cup, bowl, 	bottle, drawer, cabinet, plate, box).
+- movable:
+	The object is normally movable by a tabletop robot.
+        Objects:
+        {object_list}
+
+        Return ONLY valid JSON. Do NOT wrap the JSON inside markdown code fences.
+
+        {{
+            "object_name": {{
+                "type": "rigid/fabric/articulated",
+                "container": True/False,
+                "movable": True/False
+            }}
+        }}
+</code></pre>
+        </div>
+      </details>
+
+      <details class="prompt-item">
+        <summary>
+          <span>02. Stage II: Prompt for
+Scene Graph Completion</span>
+          <span class="prompt-tag">Scene Graph Generation</span>
+        </summary>
+        <div class="prompt-content">
+          <pre><code>You are a robotic scene analyst.
+You are given:
+        1. An RGB image of a tabletop manipulation scene.
+        2. Detected movable objects with highlighted mask boundaries and labels.
+        3. Current gripper states: {gripper_state_description}
+        4. Current subtask: {current_action}. The image is taken during the middle of executing this subtask.
+
+Your task is to complete the candidate symbolic scene graph, by selecting exactly ONE candidate for each relation and attribute from the provided lists.
+
+Rules:
+        - Consider holding to be true if the gripper is closed.
+        - Inference should be consistent with the current subtask and gripper states.
+        - Choose exactly ONE candidate for every relation and attribute.
+        - If no relation holds, choose "none".
+        - Do NOT invent new objects or predicates.
+
+--------------------------------------------------
+Complete the following symbolic graph template
+--------------------------------------------------
+{scene_graph_template}
+        
+Replace each candidate list with the selected value.
+Return ONLY valid JSON.</code></pre>
+        </div>
+      </details>
+
+      <details class="prompt-item">
+        <summary>
+          <span>03. Stage III: Prompt for
+Support Relation Completion</span>
+          <span class="prompt-tag">Scene Graph Generation</span>
+        </summary>
+        <div class="prompt-content">
+          <pre><code>You are a robotic scene analyst.
+You are given:
+    1. An RGB image of a tabletop manipulation scene.
+    2. Detected objects with highlighted mask boundaries and labels.
+
+The current symbolic scene graph is: {current_graph}
+The following objects currently do not have a direct physical supporter: {missing_objects}
+
+Task: Complete the scene graph by adding exactly ONE support relation for each listed object.
+
+Rules:
+    - Use only the predicates: {support-related predicates}.
+    - Use only objects from the provided object list.
+    - Do not modify existing relations.
+    - Add only the missing support relations.
+    - Do not return relations/attributes seen in the current symbolic scene graph.
+    - Return ONLY valid JSON.
+
+Object list: {objects_list}
+
+    {{
+        "relations":[
+            ["object", "predicate", "supporter"]
+        ]
+    }}</code></pre>
+        </div>
+      </details>
+
+      <details class="prompt-item">
+        <summary>
+          <span>04. Online Task Planning: Prompt for
+Planning Goal Generation</span>
+          <span class="prompt-tag">Online Task Planning</span>
+        </summary>
+        <div class="prompt-content">
+          <pre><code>You are an expert in PDDL planning.
+You are given:
+	1. A valid PDDL problem file with the goal section intentionally omitted.
+	2. A human instruction describing the desired task.
+Your job is to generate ONLY the PDDL goal section.
+Rules:
+	- Only use object names that already appear in the problem.
+	- Only use predicates that are consistent with the problem/domain.
+	- Do NOT invent new objects or predicates.
+	- Do NOT modify any existing part of the problem.
+	- Return ONLY content within the (:goal ...) block.
+	- Do NOT include "(:goal" and ")".
+	- Do NOT include explanations or markdown.
+Human instruction: {user_instruction}
+PDDL problem: {problem_without_goal}
+Domain types: {domain_types}
+Domain predicates: {domain_predicates}
+
+Example output:
+(and
+    (predicate1 object_name1 object_name2)
+    (not (predicate2 object_name3 object_name4))
+)</code></pre>
+        </div>
+      </details>
+
+    </div>
+  </div>
+</section>
 
   <section id="citation" class="section hero is-light">
     <div class="container is-max-desktop">
@@ -230,5 +1194,492 @@
       <p class="small-note">Project page for Humanoids 2026.</p>
     </div>
   </footer>
+
+
+<script>
+(() => {
+  const operators = [
+    {
+      name: "stand",
+      params: [
+        ["container", "container"],
+        ["gripper", "gripper"],
+        ["surface", "surface"]
+      ],
+      pre: [
+        "on(?container, ?surface)",
+        "not_upright(?container)",
+        "gripper_empty(?gripper)",
+        "no_pourable(?container)"
+      ],
+      add: [
+        "upright(?container)"
+      ],
+      del: [
+        "not_upright(?container)"
+      ]
+    },
+    {
+      name: "wipe",
+      params: [
+        ["other", "other"],
+        ["fabric", "fabric"],
+        ["gripper", "gripper"],
+        ["surface", "surface"]
+      ],
+      pre: [
+        "on(?fabric, ?surface)",
+        "gripper_empty(?gripper)",
+        "on(?other, ?surface)"
+      ],
+      add: [],
+      del: [
+        "on(?other, ?surface)"
+      ]
+    },
+    {
+      name: "grasp_container",
+      params: [
+        ["container", "container"],
+        ["gripper", "gripper"],
+        ["surface", "surface"]
+      ],
+      pre: [
+        "on(?container, ?surface)",
+        "gripper_empty(?gripper)",
+        "upright(?container)"
+      ],
+      add: [
+        "holding(?gripper, ?container)"
+      ],
+      del: [
+        "on(?container, ?surface)",
+        "gripper_empty(?gripper)"
+      ]
+    },
+    {
+      name: "pour",
+      params: [
+        ["container", "container"],
+        ["container2", "container"],
+        ["gripper", "gripper"],
+        ["surface", "surface"]
+      ],
+      pre: [
+        "contain_pourable(?container)",
+        "upright(?container2)",
+        "on(?container2, ?surface)",
+        "holding(?gripper, ?container)",
+        "no_pourable(?container2)"
+      ],
+      add: [
+        "contain_pourable(?container2)",
+        "no_pourable(?container)"
+      ],
+      del: [
+        "contain_pourable(?container)",
+        "no_pourable(?container2)"
+      ]
+    },
+    {
+      name: "place_container",
+      params: [
+        ["container", "container"],
+        ["gripper", "gripper"],
+        ["surface", "surface"]
+      ],
+      pre: [
+        "holding(?gripper, ?container)",
+        "upright(?container)",
+        "no_pourable(?container)"
+      ],
+      add: [
+        "on(?container, ?surface)",
+        "gripper_empty(?gripper)"
+      ],
+      del: [
+        "holding(?gripper, ?container)"
+      ]
+    },
+    {
+      name: "open_drawer",
+      params: [
+        ["articulated_container", "articulated_container"],
+        ["gripper", "gripper"],
+        ["surface", "surface"]
+      ],
+      pre: [
+        "closed(?articulated_container)",
+        "no_pourable(?articulated_container)",
+        "gripper_empty(?gripper)",
+        "upright(?articulated_container)",
+        "on(?articulated_container, ?surface)"
+      ],
+      add: [
+        "open(?articulated_container)"
+      ],
+      del: [
+        "closed(?articulated_container)"
+      ]
+    },
+    {
+      name: "close_drawer",
+      params: [
+        ["articulated_container", "articulated_container"],
+        ["gripper", "gripper"],
+        ["surface", "surface"]
+      ],
+      pre: [
+        "open(?articulated_container)",
+        "no_pourable(?articulated_container)",
+        "gripper_empty(?gripper)",
+        "upright(?articulated_container)",
+        "on(?articulated_container, ?surface)"
+      ],
+      add: [
+        "closed(?articulated_container)"
+      ],
+      del: [
+        "open(?articulated_container)"
+      ]
+    },
+    {
+      name: "pass",
+      params: [
+        ["container", "container"],
+        ["gripper", "gripper"],
+        ["gripper2", "gripper"]
+      ],
+      pre: [
+        "gripper_empty(?gripper2)",
+        "holding(?gripper, ?container)",
+        "upright(?container)",
+        "no_pourable(?container)"
+      ],
+      add: [
+        "holding(?gripper2, ?container)",
+        "gripper_empty(?gripper)"
+      ],
+      del: [
+        "gripper_empty(?gripper2)",
+        "holding(?gripper, ?container)"
+      ]
+    },
+    {
+      name: "grasp_while_holding",
+      params: [
+        ["container", "container"],
+        ["obj", "obj"],
+        ["gripper", "gripper"],
+        ["gripper2", "gripper"],
+        ["surface", "surface"]
+      ],
+      pre: [
+        "holding(?gripper2, ?container)",
+        "gripper_empty(?gripper)",
+        "no_pourable(?container)",
+        "on(?obj, ?surface)",
+        "upright(?container)"
+      ],
+      add: [
+        "holding(?gripper, ?obj)"
+      ],
+      del: [
+        "gripper_empty(?gripper)",
+        "on(?obj, ?surface)"
+      ]
+    },
+    {
+      name: "place_while_holding",
+      params: [
+        ["container", "container"],
+        ["obj", "obj"],
+        ["gripper", "gripper"],
+        ["gripper2", "gripper"]
+      ],
+      pre: [
+        "holding(?gripper2, ?container)",
+        "upright(?container)",
+        "holding(?gripper, ?obj)",
+        "no_pourable(?container)"
+      ],
+      add: [
+        "gripper_empty(?gripper)",
+        "inside(?obj, ?container)"
+      ],
+      del: [
+        "holding(?gripper, ?obj)"
+      ]
+    },
+    {
+      name: "grasp_obj",
+      params: [
+        ["obj", "obj"],
+        ["gripper", "gripper"],
+        ["surface", "surface"]
+      ],
+      pre: [
+        "gripper_empty(?gripper)",
+        "on(?obj, ?surface)"
+      ],
+      add: [
+        "holding(?gripper, ?obj)"
+      ],
+      del: [
+        "gripper_empty(?gripper)",
+        "on(?obj, ?surface)"
+      ]
+    },
+    {
+      name: "place_obj",
+      params: [
+        ["obj", "obj"],
+        ["container", "container"],
+        ["gripper", "gripper"],
+        ["surface", "surface"]
+      ],
+      pre: [
+        "on(?container, ?surface)",
+        "upright(?container)",
+        "holding(?gripper, ?obj)",
+        "no_pourable(?container)"
+      ],
+      add: [
+        "gripper_empty(?gripper)",
+        "inside(?obj, ?container)"
+      ],
+      del: [
+        "holding(?gripper, ?obj)"
+      ]
+    }
+  ];
+
+  const list = document.getElementById("op-list");
+  const title = document.getElementById("op-title");
+  const indexLabel = document.getElementById("op-index");
+  const params = document.getElementById("op-params");
+  const preconditions = document.getElementById("op-preconditions");
+  const addEffects = document.getElementById("op-add-effects");
+  const delEffects = document.getElementById("op-del-effects");
+
+  if (!list || !title || !indexLabel || !params ||
+      !preconditions || !addEffects || !delEffects) {
+    return;
+  }
+
+  document.getElementById("op-count").textContent = operators.length;
+
+  function renderPredicates(target, predicates, type) {
+    target.replaceChildren();
+
+    if (predicates.length === 0) {
+      const empty = document.createElement("span");
+      empty.className = "op-predicate";
+      empty.textContent = "None";
+      target.appendChild(empty);
+      return;
+    }
+
+    predicates.forEach(predicate => {
+      const element = document.createElement("code");
+      element.className = `op-predicate ${type}`;
+      element.textContent = predicate;
+      target.appendChild(element);
+    });
+  }
+
+  function selectOperator(index) {
+    const op = operators[index];
+
+    title.textContent = op.name;
+    indexLabel.textContent =
+      `${String(index + 1).padStart(2, "0")} / ${operators.length}`;
+
+    params.replaceChildren();
+
+    op.params.forEach(([name, type]) => {
+      const item = document.createElement("span");
+      item.className = "op-param";
+
+      const variable = document.createElement("code");
+      variable.textContent = `?${name}`;
+
+      const typeLabel = document.createElement("small");
+      typeLabel.textContent = `− ${type}`;
+
+      item.append(variable, typeLabel);
+      params.appendChild(item);
+    });
+
+    renderPredicates(preconditions, op.pre, "pre");
+    renderPredicates(addEffects, op.add, "add");
+    renderPredicates(delEffects, op.del, "del");
+
+    list.querySelectorAll(".op-list-item").forEach((button, i) => {
+      const active = i === index;
+      button.classList.toggle("active", active);
+
+      if (active) {
+        button.setAttribute("aria-current", "true");
+      } else {
+        button.removeAttribute("aria-current");
+      }
+    });
+  }
+
+  operators.forEach((op, index) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "op-list-item";
+
+    const number = document.createElement("span");
+    number.className = "op-list-number";
+    number.textContent = String(index + 1).padStart(2, "0");
+
+    const name = document.createElement("span");
+    name.className = "op-list-name";
+    name.textContent = op.name;
+
+    button.append(number, name);
+    button.addEventListener("click", () => selectOperator(index));
+
+    list.appendChild(button);
+  });
+
+  selectOperator(0);
+})();
+</script>
+
+
+<script>
+(() => {
+  const videos = [
+    {
+      title: "AgileX Cobot Magic: pour water pink cup",
+      src: "Visualization_videos/scene_graphAgilex_Cobot_Magic_pour_water_pink_cup_51_h264.mp4"
+    },
+    {
+      title: "AgileX Cobot Magic: storage fruit basket",
+      src: "Visualization_videos/scene_graphAgilex_Cobot_Magic_storage_fruit_basket_130_h264.mp4"
+    },
+    {
+      title: "AgileX Cobot Magic: storage fruit bowl",
+      src: "Visualization_videos/scene_graphAgilex_Cobot_Magic_storage_fruit_bowl_27_h264.mp4"
+    },
+    {
+      title: "AgileX Cobot Magic: wipe the table",
+      src: "Visualization_videos/scene_graphAgilex_Cobot_Magic_wipe_the_table_163_h264.mp4"
+    },
+    {
+      title: "AgileX Cobot Magic: make fruit salad",
+      src: "Visualization_videos/scene_graphCobot_Magic_make_fruit_salad_169_h264.mp4"
+    },
+    {
+      title: "Galaxea R1 Lite: pour liquid marble bar counter",
+      src: "Visualization_videos/scene_graphGalaxea_R1_Lite_pour_liquid_mrable_bar_counter_9_h264.mp4"
+    },
+    {
+      title: "Galaxea R1 Lite: pour solid marble bar counter",
+      src: "Visualization_videos/scene_graphGalaxea_R1_Lite_pour_solid_marble_bar_counter_24_h264.mp4"
+    },
+    {
+      title: "Galaxea R1 Lite: toggle drawer red",
+      src: "Visualization_videos/scene_graphGalaxea_R1_Lite_toggle_drawer_red_44_h264.mp4"
+    },
+    {
+      title: "Galaxea R1 Lite: toggle drawer yellow",
+      src: "Visualization_videos/scene_graphGalaxea_R1_Lite_toggle_drawer_yellow_28_h264.mp4"
+    },
+    {
+      title: "Realman RMC AIDA L: pass bowl",
+      src: "Visualization_videos/scene_graphRealman_RMC_AIDA_L_pass_bowl_43_h264.mp4"
+    },
+    {
+      title: "Realman RMC AIDA L: basket storage banana",
+      src: "Visualization_videos/scene_graphRMC-AIDA-L_basket_storage_banana_577_h264.mp4"
+    },
+    {
+      title: "Realman RMC AIDA L: fruit storage",
+      src: "Visualization_videos/scene_graphRMC-AIDA-L_fruit_storage_17_h264.mp4"
+    }
+  ];
+
+  const video = document.getElementById("sg-video");
+  const title = document.getElementById("sg-title");
+  const counter = document.getElementById("sg-counter");
+  const tasks = [...document.querySelectorAll(".sg-task")];
+  const total = document.getElementById("sg-total");
+
+  if (!video || !title || !counter || tasks.length === 0) {
+    return;
+  }
+
+  let current = 0;
+
+  if (total) {
+    total.textContent = `${videos.length} tasks`;
+  }
+
+  function showVideo(index) {
+    if (index < 0 || index >= videos.length) {
+      return;
+    }
+
+    current = index;
+    const item = videos[current];
+
+    video.pause();
+    video.onerror = () => {
+      title.textContent = item.title + " — Failed to load video";
+      console.error("Failed to load video:", item.src);
+    };
+
+    video.onloadedmetadata = () => {
+      title.textContent = item.title;
+    };
+
+    video.src = item.src;
+    video.load();
+
+    title.textContent = item.title;
+    counter.textContent = `${current + 1} / ${videos.length}`;
+
+    tasks.forEach((task, i) => {
+      const active = i === current;
+
+      task.classList.toggle("active", active);
+
+      if (active) {
+        task.setAttribute("aria-current", "true");
+      } else {
+        task.removeAttribute("aria-current");
+      }
+    });
+  }
+
+  // Click a task to change the video.
+  tasks.forEach((task) => {
+    task.addEventListener("click", () => {
+      const index = Number(task.dataset.index);
+      showVideo(index);
+    });
+  });
+
+  // Expand/collapse robot groups.
+  document.querySelectorAll(".sg-group-header").forEach((button) => {
+    button.addEventListener("click", () => {
+      const group = button.closest(".sg-group");
+      const expanded = button.getAttribute("aria-expanded") === "true";
+
+      button.setAttribute("aria-expanded", String(!expanded));
+      group.classList.toggle("collapsed", expanded);
+    });
+  });
+
+  // Load the first video.
+  showVideo(0);
+})();
+</script>
+
 </body>
 </html>
