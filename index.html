@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="SG2SP: From Demonstrations to Symbolic Planning — Robotic Scene Graph Generation via Symbolic-Consistent Temporal Abstraction.">
+  <meta property="og:title" content="From Demonstrations to Symbolic Planning | SG2SP">
+  <meta property="og:description" content="Robotic Scene Graph Generation via Symbolic-Consistent Temporal Abstraction.">
+  <title>SG2SP: From Demonstrations to Symbolic Planning</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
+  <style>
+    :root { --ink: #202124; --blue: #3273dc; --muted: #626a73; --pale: #f7f8fa; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Noto Sans', sans-serif; color: var(--ink); }
+    .navbar { border-bottom: 1px solid #ededed; }
+    .navbar-item { font-weight: 600; }
+    .publication-header .hero-body { padding-top: 3rem; padding-bottom: 1rem; }
+    .publication-title { font-family: 'Google Sans', sans-serif; font-size: clamp(2rem, 4vw, 3rem) !important; line-height: 1.22; }
+    .publication-authors { font-family: 'Google Sans', sans-serif; }
+    .publication-authors a { color: var(--blue); }
+    .publication-authors a:hover { text-decoration: underline; }
+    .author-block { display: inline-block; margin: 0 .12rem; }
+    .publication-links { display: flex; justify-content: center; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 1.2rem; }
+    .publication-links .button { font-weight: 600; }
+    .link-block { display: inline-block; }
+    .venue { color: #555; font-weight: 600; margin-top: .65rem; }
+    .section { padding-top: 3rem; padding-bottom: 3rem; }
+    .section-title { font-family: 'Google Sans', sans-serif; color: #252a31; }
+    .content p { line-height: 1.8; }
+    .video-wrap { max-width: 900px; margin: 0 auto; }
+    .video-wrap video { width: 100%; display: block; border-radius: 10px; box-shadow: 0 4px 16px rgba(0,0,0,.16); background: #111; }
+    .section-intro { max-width: 850px; margin: 0 auto; }
+    .contribution-card { height: 100%; padding: 1.4rem; border: 1px solid #e8eaf0; border-radius: 10px; background: white; box-shadow: 0 2px 9px rgba(0,0,0,.035); }
+    .contribution-card .icon { color: var(--blue); margin-bottom: .75rem; }
+    .contribution-card h3 { font-size: 1.08rem; font-weight: 700; margin-bottom: .55rem; }
+    .contribution-card p { font-size: .96rem; color: #4c535b; line-height: 1.7; }
+    .stage-card { border: 1px solid #e4e7ed; border-radius: 10px; padding: 1.4rem 1.2rem; height: 100%; background: #fff; }
+    .stage-badge { display: inline-block; background: var(--blue); color: #fff; border-radius: 5px; padding: .12rem .48rem; font-size: .8rem; font-weight: 700; margin-bottom: .8rem; }
+    .stage-card h3 { font-weight: 700; font-size: 1.05rem; margin-bottom: .5rem; }
+    .stage-card p { color: #555d66; line-height: 1.7; font-size: .95rem; }
+    .pipeline-arrow { display: flex; align-items: center; justify-content: center; color: #99a2ad; font-size: 1.5rem; }
+    pre { overflow-x: auto; padding: 1.2rem; background: #f4f6f8; border-radius: 8px; font-size: .9rem; }
+    .footer { border-top: 1px solid #eee; padding: 2rem 1.5rem; }
+    .small-note { color: #707780; font-size: .92rem; }
+    @media (max-width: 768px) {
+      .publication-header .hero-body { padding-top: 2rem; }
+      .publication-title { font-size: 2rem !important; }
+      .pipeline-arrow { transform: rotate(90deg); min-height: 2rem; }
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar" role="navigation" aria-label="main navigation">
+    <div class="container is-max-widescreen">
+      <div class="navbar-brand">
+        <a class="navbar-item" href="https://tuwien-asl.github.io/" target="_blank" rel="noopener">
+          <span class="icon"><i class="fas fa-house"></i></span>&nbsp; Autonomous Systems Lab
+        </a>
+      </div>
+      <div class="navbar-menu is-active">
+        <div class="navbar-end">
+          <a class="navbar-item" href="#abstract">Abstract</a>
+          <a class="navbar-item" href="#video">Video</a>
+          <a class="navbar-item" href="#method">Method</a>
+          <a class="navbar-item" href="#citation">Citation</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero publication-header">
+    <div class="hero-body">
+      <div class="container is-max-widescreen">
+        <div class="has-text-centered">
+          <h1 class="title publication-title">From Demonstrations to Symbolic Planning:<br class="is-hidden-mobile"> Robotic Scene Graph Generation via Symbolic-Consistent Temporal Abstraction</h1>
+          <p class="is-size-5 venue">Accepted to IEEE-RAS International Conference on Humanoid Robots (Humanoids 2026)</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="publication-author-block">
+    <div class="container is-max-desktop">
+      <div class="has-text-centered">
+        <div class="is-size-5 publication-authors">
+          <span class="author-block">Haoyi Zheng<sup>1</sup>,</span>
+          <span class="author-block">Daniel Sliwowski<sup>1</sup>,</span>
+          <span class="author-block">Dongheui Lee<sup>1,2</sup></span>
+        </div>
+        <div class="publication-authors mt-2">
+          <div><sup>1</sup> Autonomous Systems Lab, Technische Universität Wien (TU Wien)</div>
+          <div><sup>2</sup> Institute of Robotics and Mechatronics, German Aerospace Center (DLR)</div>
+        </div>
+        <div class="publication-links">
+          <span class="link-block">
+            <a href="#video" class="button is-normal is-rounded is-dark">
+              <span class="icon"><i class="fas fa-video"></i></span><span>Project Video</span>
+            </a>
+          </span>
+          <span class="link-block">
+            <a href="#abstract" class="button is-normal is-rounded is-link is-light">
+              <span class="icon"><i class="fas fa-file-lines"></i></span><span>Abstract</span>
+            </a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="abstract" class="section hero is-light mt-5">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3 section-title">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Robotic demonstrations provide a rich source of task knowledge, which could be leveraged for robotic task planning. Explicit symbolic representations offer a structured interface between robotic observations and symbolic planning, enabling task knowledge to be reused across different tasks. However, constructing planning-ready symbolic representations from robotic demonstrations remains challenging, particularly in achieving temporally consistent abstraction and accurately grounded symbolic states.
+              We propose a framework that converts robotic demonstrations into planning-ready symbolic representations by first segmenting demonstrations into symbolically consistent segments and then generating a symbolic scene graph for each segment through robot-prior-informed reasoning. The resulting scene graphs are further lifted into reusable Planning Domain Definition Language (PDDL) operators for downstream symbolic planning. Experiments on a multi-task manipulation dataset show that our method produces more accurate and planning-ready scene graphs than existing zero-shot baselines while avoiding excessive VLM inference. We further demonstrate a pipeline that reuses the automatically lifted symbolic operators for planning on previously unseen real-world tasks.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="video" class="section">
+    <div class="container is-max-desktop">
+      <div class="has-text-centered">
+        <h2 class="title is-3 section-title">Project Video</h2>
+        <p class="subtitle is-6 small-note mb-5">Overview of the proposed framework and experimental results.</p>
+      </div>
+      <div class="video-wrap">
+        <video controls playsinline preload="metadata">
+          <source src="./humanoids_video2.mp4" type="video/mp4">
+          Your browser does not support HTML video.
+        </video>
+      </div>
+    </div>
+  </section>
+
+  <section class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="has-text-centered">
+        <h2 class="title is-2 section-title">Key Contributions</h2>
+      </div>
+    </div>
+  </section>
+  <section class="section pt-5">
+    <div class="container is-max-desktop">
+      <div class="columns is-variable is-4">
+        <div class="column">
+          <div class="contribution-card">
+            <!-- <div class="icon is-large"><i class="fas fa-film fa-2x"></i></div> -->
+            <h3>Symbolically Consistent Temporal Abstraction</h3>
+            <p>Segment robotic demonstrations into temporally consistent intervals to support the construction of planning-ready symbolic states.</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="contribution-card">
+            <!-- <div class="icon is-large"><i class="fas fa-diagram-project fa-2x"></i></div> -->
+            <h3>Robot-Prior-Informed Scene Graph Generation</h3>
+            <p>Generate a symbolic scene graph for each segment using reasoning informed by robot priors, with the goal of producing accurately grounded symbolic states.</p>
+          </div>
+        </div>
+        <div class="column">
+          <div class="contribution-card">
+            <!-- <div class="icon is-large"><i class="fas fa-sitemap fa-2x"></i></div> -->
+            <h3>Reusable Symbolic Operators</h3>
+            <p>Lift the resulting scene graphs into PDDL operators for downstream planning and demonstrate reuse on previously unseen real-world tasks.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="method" class="section hero is-light">
+    <div class="container is-max-desktop">
+      <div class="has-text-centered">
+        <h2 class="title is-2 section-title">Method Overview</h2>
+        <p class="subtitle is-6 small-note">From continuous demonstrations to reusable symbolic planning knowledge.</p>
+      </div>
+    </div>
+  </section>
+  <section class="section pt-5">
+    <div class="container is-max-widescreen">
+      <div class="columns is-variable is-3 is-vcentered">
+        <div class="column">
+          <div class="stage-card">
+            <span class="stage-badge">STEP I</span>
+            <h3>Temporal Abstraction</h3>
+            <p>Segment the demonstration into intervals that support temporally consistent symbolic abstraction.</p>
+          </div>
+        </div>
+        <div class="column is-narrow pipeline-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="column">
+          <div class="stage-card">
+            <span class="stage-badge">STEP II</span>
+            <h3>Symbolic Scene Graphs</h3>
+            <p>Generate grounded symbolic scene graphs for the resulting segments through robot-prior-informed reasoning.</p>
+          </div>
+        </div>
+        <div class="column is-narrow pipeline-arrow"><i class="fas fa-arrow-right"></i></div>
+        <div class="column">
+          <div class="stage-card">
+            <span class="stage-badge">STEP III</span>
+            <h3>PDDL Operator Lifting</h3>
+            <p>Convert the symbolic representations into reusable operators for symbolic task planning.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="citation" class="section hero is-light">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 section-title">Citation</h2>
+      <p class="mb-3">BibTeX will be added when the final publication details are available.</p>
+      <pre><code>Citation information forthcoming.</code></pre>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="content has-text-centered">
+      <p>SG2SP · Scene Graph to Symbolic Planning</p>
+      <p class="small-note">Project page for Humanoids 2026.</p>
+    </div>
+  </footer>
+</body>
+</html>
