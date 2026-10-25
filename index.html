@@ -120,8 +120,6 @@
           <div class="content has-text-justified">
             <p>
               Robotic demonstrations provide a rich source of task knowledge, which could be leveraged for robotic task planning. Explicit symbolic representations offer a structured interface between robotic observations and symbolic planning, enabling task knowledge to be reused across different tasks. However, constructing planning-ready symbolic representations from robotic demonstrations remains challenging, particularly in achieving temporally consistent abstraction and accurately grounded symbolic states.
-            </p>
-            <p>
               We propose a framework that converts robotic demonstrations into planning-ready symbolic representations by first segmenting demonstrations into symbolically consistent segments and then generating a symbolic scene graph for each segment through robot-prior-informed reasoning. The resulting scene graphs are further lifted into reusable Planning Domain Definition Language (PDDL) operators for downstream symbolic planning. Experiments on a multi-task manipulation dataset show that our method produces more accurate and planning-ready scene graphs than existing zero-shot baselines while avoiding excessive VLM inference. We further demonstrate a pipeline that reuses the automatically lifted symbolic operators for planning on previously unseen real-world tasks.
             </p>
           </div>
